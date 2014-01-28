@@ -31,29 +31,29 @@ describe('Parser', function() {
 		it('a basic string with no BBCode', function() {
 			var check = BBParse.parse('hey whoa')
 			expect(check).to.be.an('object')
-			expect(check.value).to.exist
-			expect(check.value).to.equal('hey whoa')
+			expect(check.body).to.exist
+			expect(check.body).to.equal('hey whoa')
 		})
 
 		it('a basic string with basic BBCode', function() {
 			var check = BBParse.parse('[code] hey whoa [/code]')
-			expect(check.value).to.exist
-			expect(check.value).to.equal('code')
+			expect(check.body).to.exist
+			expect(check.body).to.equal('code')
 			expect(check.child).to.exist 
-			expect(check.child.value).to.equal(' hey whoa ')
+			expect(check.child.body).to.equal(' hey whoa ')
 		})
 
 		it('a basic string following basic BBCode', function() {
 			var check = BBParse.parse('[code] hey whoa [/code] test')
-			expect(check.next[0].value).to.equal(' test')
+			expect(check.next[0].body).to.equal(' test')
 		})
 
 		it('a basic string with nested BBCode', function() {
 			var check = BBParse.parse('[code][code] hey whoa [/code][/code] test')			
-			expect(check.value).to.equal('code')
-			expect(check.child.value).to.equal('code')
-			expect(check.child.child.value).to.equal(' hey whoa ');
-			expect(check.next[0].value).to.equal(' test')
+			expect(check.body).to.equal('code')
+			expect(check.child.body).to.equal('code')
+			expect(check.child.child.body).to.equal(' hey whoa ');
+			expect(check.next[0].body).to.equal(' test')
 		})
 
 		it('a basic string with multiple nested BBCode', function() {
@@ -62,30 +62,30 @@ describe('Parser', function() {
 
 		it('a broken BBCode', function() {
 			var check = BBParse.parse('[code] nice')
-			expect(check.value).to.equal('[code] nice')
+			expect(check.body).to.equal('[code] nice')
 		})
 
 		it('a broken BBCode endtag', function() {
 			var check = BBParse.parse('nice [/code]')
-			expect(check.value).to.equal('nice [/code]')
+			expect(check.body).to.equal('nice [/code]')
 		})
 
 		it('a broken parent BBCode with a functional child BBCode', function() {
 			var check = BBParse.parse('[code][a]nice[/a]')
-			expect(check.value).to.equal('[code]')
-			expect(check.next[0].value).to.equal('a')
-			expect(check.next[0].child.value).to.equal('nice')
+			expect(check.body).to.equal('[code]')
+			expect(check.next[0].body).to.equal('a')
+			expect(check.next[0].child.body).to.equal('nice')
 		})
 
 		it('a functional parent BBCode with a broken child BBCode', function() {
 			var check = BBParse.parse('[code][a]nice[/code]')
-			expect(check.value).to.equal('code')
-			expect(check.child.value).to.equal('[a]nice')
+			expect(check.body).to.equal('code')
+			expect(check.child.body).to.equal('[a]nice')
 		})
 
 		it('advanced nested BBCode', function() {
 			var check = BBParse.parse('[TAGA][TAGB]A[/TAGB]B[/TAGA] C [TAGC]D[/TAGC]')
-			expect(check.child.next[0].value).to.equal("B")
+			expect(check.child.next[0].body).to.equal("B")
 		})
 	});
 });

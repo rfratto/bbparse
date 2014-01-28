@@ -32,24 +32,24 @@ describe('Lexer', function() {
 			var check = BBParse.lex('hey whoa')
 			expect(check).to.be.an('array')
 			expect(check[0]).to.exist
-			expect(check[0].value).to.equal('hey whoa')
+			expect(check[0].body).to.equal('hey whoa')
 		});
 
 		it('for a basic string with BBCode', function() {
 			var check = BBParse.lex('[code] hey whoa [/code] ok')
 			expect(check).to.be.an('array')
-			expect(check[0].value).to.equal('code')
-			expect(check[0].type).to.equal('starttag')
+			expect(check[0].body).to.equal('code')
+			expect(check[0].type).to.equal('opentag')
 			expect(check[1].type).to.equal('text')
-			expect(check[1].value).to.equal(' hey whoa ')
-			expect(check[2].type).to.equal('endtag')
-			expect(check[2].value).to.equal('code')
+			expect(check[1].body).to.equal(' hey whoa ')
+			expect(check[2].type).to.equal('closetag')
+			expect(check[2].body).to.equal('code')
 		});
 
 		it('for a basic string with fake BBCode', function() {
 			var check = BBParse.lex("hey [what's going on");
-			expect(check[0].value).to.equal('hey '); 
-			expect(check[1].value).to.equal("what's going on")
+			expect(check[0].body).to.equal('hey '); 
+			expect(check[1].body).to.equal("[what's going on")
 		})
 
 		it('for a basic string with invalid BBCode', function() {
@@ -59,7 +59,7 @@ describe('Lexer', function() {
 
 		it('for a basic string with empty BBCode', function() {
 			var check = BBParse.lex("hey [] what's going on")
-			expect(check[1].value).to.equal("[] what's going on")
+			expect(check[1].body).to.equal("[] what's going on")
 		})
 
 		it('for a broken BBCode with attributes', function() {
