@@ -62,9 +62,16 @@ describe('Lexer', function() {
 			expect(check[1].body).to.equal("[] what's going on")
 		})
 
+		it('for a basic string with attributes', function() {
+			var check = BBParse.lex('[TAGA value="a_b"]text[/TAGA]')
+			expect(check[0].attrs[0].value).to.equal("a_b")
+		})
+
 		it('for a broken BBCode with attributes', function() {
 			var check = BBParse.lex('[TAGA value="5 A[/TAGA]')
-			expect(check[0].body).to.equal('[TAGA value="5 A')
+			expect(check[0].body).to.equal('[TAGA value="5 A[/TAGA]')
 		})
+
+
 	})
 });

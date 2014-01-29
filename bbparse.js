@@ -95,7 +95,7 @@ window.BBParse = {
 					if (text.substr(idx, 2) == '="') {
 						idx += 2
 						value = ""
-						while (isAlphaNumeric(text[idx])) value += text[idx++]
+						while (text[idx] != '"') value += text[idx++]
 						if (text[idx++] == '"') attrs.push({name: null, value: value}) 
 						else {
 							idx--
@@ -124,7 +124,7 @@ window.BBParse = {
 							idx++
 							if (text[idx] != '"') return "error"
 							idx++
-							while (isAlphaNumeric(text[idx])) value += text[idx++]
+							while (text[idx] && text[idx] != '"') value += text[idx++]
 							stack_tmp += '"' + value 
 							if (text[idx] != '"') return "error"
 							stack_tmp += '"'
