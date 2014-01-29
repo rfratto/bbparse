@@ -185,6 +185,12 @@ window.BBParse = {
 
 			if (lexemes[idx].type == 'opentag') {
 				ret.body = lexemes[idx++].body;
+				if (lexemes[idx-1].attrs.length) {
+					var copy = lexemes[idx-1].attrs 
+					ret.attrs = {}
+					for (var i in copy) 
+						ret.attrs[copy[i].name || "self"] = copy[i].value
+				}
 				tagStack.push(ret.body);
 				ret.child = _parse();
 				tagStack.pop(ret.body);

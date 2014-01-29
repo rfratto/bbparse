@@ -71,7 +71,7 @@ describe('Parser', function() {
 		})
 
 		it('a broken parent BBCode with a functional child BBCode', function() {
-			var check = BBParse.parse('[code][a]nice[/a]')
+			var check = BBParse.parse('[code="6"][a]nice[/a]')
 			expect(check.body).to.equal('[code]')
 			expect(check.next[0].body).to.equal('a')
 			expect(check.next[0].child.body).to.equal('nice')
@@ -87,5 +87,6 @@ describe('Parser', function() {
 			var check = BBParse.parse('[TAGA][TAGB]A[/TAGB]B[/TAGA] C [TAGC]D[/TAGC]')
 			expect(check.child.next[0].body).to.equal("B")
 		})
+
 	});
 });

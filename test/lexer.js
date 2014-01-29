@@ -71,7 +71,5 @@ describe('Lexer', function() {
 			var check = BBParse.lex('[TAGA value="5 A[/TAGA]')
 			expect(check[0].body).to.equal('[TAGA value="5 A[/TAGA]')
 		})
-
-
 	})
 });
